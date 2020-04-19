@@ -30,24 +30,6 @@ void paralelo(int argc, char *argv[])
 
     arquivo = fopen(argv[2], "r");
 
-    while (getline(&linha, &len, arquivo) > 0)
-    {
-        count_rows++;
-    }
-    rewind(arquivo);
-
-    char matriz[count_rows][len];
-
-    int i = 0;
-    while (getline(&linha, &len, arquivo) > 0)
-    {
-        for(int j=0; j <= len; j++){
-            matriz[i][j] = linha[j];
-        }
-        i++;
-    }
-    rewind(arquivo);
-
     NUM_THREADS = atoi(argv[3]);
     temp_ini = omp_get_wtime();
 
@@ -57,9 +39,9 @@ void paralelo(int argc, char *argv[])
     {
         int sum = 0;
         
-        #pragma omp for
-        for(int i=0; i < count_rows; i++){
-            sum = sum + ocorrencia(argv[1], matriz[i]);
+        while (getline(&linha, &len, arquivo) > 0)
+        {
+            sum = sum + ocorrencia(argv[1], linha);
         }
 
         #pragma omp critical
