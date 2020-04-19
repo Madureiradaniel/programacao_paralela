@@ -40,8 +40,8 @@ def gerando_arquivo(nm_arquivo, tam_arquivo, maior_arquivo=None):
         arquivo = open(nm_arquivo, 'r')
         conteudo = arquivo.readlines()
 
-        # caso o tamanho não tenha chegado no tamanho o loop continua
-        conteudo.append(lero_lero)
+        conteudo = conteudo + conteudo
+
         arquivo = open(nm_arquivo, 'w')
 
         # escreve nova linha no arquivo
