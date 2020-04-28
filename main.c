@@ -21,6 +21,7 @@ void paralelo(int argc, char *argv[])
     FILE *arquivo;
     size_t len = 1000;
     char *linha = malloc(len);
+    char texto[500];
 
     int result = 0;
     int NUM_THREADS;
@@ -35,16 +36,16 @@ void paralelo(int argc, char *argv[])
 
     omp_set_num_threads(NUM_THREADS);
 
-    #pragma omp parallel
+    #pragma omp parallel 
     {
         int sum = 0;
         
-        while (getline(&linha, &len, arquivo) > 0)
+        for (int i = 0; fgets(texto, 500, arquivo) != NULL; i++)
         {
-            sum = sum + ocorrencia(argv[1], linha);
+            sum += ocorrencia(argv[1], texto);
         }
 
-        #pragma omp critical
+        #pragma omp atomic
         result = result + sum;
     }
 
